@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DTM Burundi – Catalogue des produits</title>
+<style>
+  :root{
+    --navy:#1b1f6e; --indigo:#2a2f9e; --indigo2:#3b3fc4; --sky:#5b8fd6; --sky-l:#9fc1ee;
+    --teal:#4a9a96; --gold:#e0a82e; --rose:#c8574d; --violet:#7a5cc4; --green:#4f9a4a;
+    --bg:#eef1f7; --card:#ffffff; --ink:#1f2340; --muted:#5d6380; --line:#dfe3ee;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Gill Sans","Gill Sans MT","Gill Sans Nova",Calibri,"Segoe UI",Arial,sans-serif;line-height:1.5}
+  a{color:var(--indigo)}
+  /* ---------- HEADER ---------- */
+  header{background:linear-gradient(100deg,var(--navy) 0%,var(--indigo) 55%,var(--indigo2) 100%);color:#fff;
+    border-bottom:4px solid var(--sky)}
+  .hwrap{max-width:1240px;margin:0 auto;padding:22px 24px 0}
+  .brand{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:14px;min-height:56px}
+  .logo img{height:56px;display:block}
+  .logo .wm{display:none;align-items:center;gap:12px}
+  .wm .oim{font-size:34px;font-weight:600;letter-spacing:.5px;line-height:1}
+  .wm .oim small{display:block;font-size:10.5px;letter-spacing:1.2px;font-weight:400;margin-top:3px}
+  .wm .sep{width:1px;height:44px;background:rgba(255,255,255,.7)}
+  .wm .dtm{font-size:12px;line-height:1.2;text-transform:uppercase}
+  .wm .dtm small{display:block;font-size:7.5px;letter-spacing:.6px;opacity:.85}
+  .titles h1{margin:0;font-size:26px;letter-spacing:.6px;text-transform:uppercase;font-weight:700}
+  .titles p{margin:4px 0 0;font-size:14px;opacity:.9}
+  .tabs{display:flex;gap:6px;margin-top:22px;flex-wrap:wrap}
+  .tab{background:none;border:0;color:#fff;font:inherit;font-size:15px;font-weight:600;padding:11px 18px;
+    border-radius:8px 8px 0 0;cursor:pointer;opacity:.9}
+  .tab.active{background:#fff;color:var(--navy);opacity:1}
+  .pill{margin-left:auto;align-self:center;border:1px solid rgba(255,255,255,.55);border-radius:20px;
+    padding:6px 14px;font-size:13px;font-weight:600;background:rgba(255,255,255,.12)}
+  /* ---------- FILTER BAR ---------- */
+  .bar{background:#fff;border-bottom:1px solid var(--line)}
+  .bwrap{max-width:1240px;margin:0 auto;padding:14px 24px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .bar label{font-size:12px;letter-spacing:.8px;color:var(--muted);text-transform:uppercase}
+  .chip{border:1px solid var(--line);background:#f6f7fb;color:var(--ink);font:inherit;font-size:13.5px;
+    padding:6px 13px;border-radius:6px;cursor:pointer}
+  .chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .search{margin-left:auto;border:1px solid var(--line);border-radius:6px;padding:7px 12px;font:inherit;font-size:14px;min-width:220px}
+  /* ---------- LAYOUT ---------- */
+  main{max-width:1240px;margin:0 auto;padding:26px 24px 50px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:24px}
+  .kpi{background:var(--card);border-radius:10px;padding:18px 20px;border-left:5px solid var(--indigo);
+    box-shadow:0 1px 3px rgba(20,25,80,.08)}
+  .kpi:nth-child(2){border-color:var(--sky)} .kpi:nth-child(3){border-color:var(--teal)} .kpi:nth-child(4){border-color:var(--gold)}
+  .kpi b{display:block;font-size:30px;color:var(--navy);line-height:1.1}
+  .kpi span{font-size:12.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted)}
+  .panel{background:var(--card);border-radius:10px;padding:22px 24px;box-shadow:0 1px 3px rgba(20,25,80,.08);margin-bottom:24px}
+  .ptitle{margin:0 0 6px;font-size:18px;color:var(--navy);border-left:4px solid var(--sky);padding-left:10px}
+  .psub{margin:0 0 14px;color:var(--muted);font-size:13.5px;padding-left:14px}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .step{background:#f6f8fd;border-radius:8px;padding:14px 16px}
+  .step b{color:var(--indigo);font-size:15px}
+  .step p{margin:4px 0 0;font-size:14px;color:var(--muted)}
+  /* ---------- CARDS ---------- */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .card{background:var(--card);border-radius:10px;box-shadow:0 1px 3px rgba(20,25,80,.1);display:flex;flex-direction:column;
+    border-top:5px solid var(--c,var(--indigo));overflow:hidden}
+  .chead{padding:18px 22px 8px;display:flex;gap:14px;align-items:flex-start}
+  .num{flex:0 0 42px;height:42px;border-radius:50%;background:var(--c,var(--indigo));color:#fff;display:grid;place-items:center;
+    font-weight:700;font-size:17px}
+  .chead h3{margin:0;font-size:19px;color:var(--navy);line-height:1.25}
+  .tag{display:inline-block;margin-top:5px;font-size:11.5px;letter-spacing:.6px;text-transform:uppercase;
+    background:#eef1fb;color:var(--indigo);padding:2px 8px;border-radius:4px}
+  .cbody{padding:4px 22px 6px;flex:1}
+  .row{margin:10px 0}
+  .row h4{margin:0 0 3px;font-size:12px;letter-spacing:.9px;text-transform:uppercase;color:var(--c,var(--indigo))}
+  .row p{margin:0;font-size:14.5px}
+  .row ul{margin:4px 0 0;padding-left:18px;font-size:14.5px}
+  .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .meta span{font-size:12.5px;background:#f3f4f8;border-radius:4px;padding:3px 9px;color:var(--muted)}
+  .cfoot{padding:14px 22px 18px;border-top:1px solid var(--line);background:#fafbfe}
+  .cfoot h4{margin:0 0 8px;font-size:12px;letter-spacing:.9px;text-transform:uppercase;color:var(--muted)}
+  .links{display:flex;flex-wrap:wrap;gap:8px}
+  .btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:13.5px;font-weight:600;
+    padding:7px 13px;border-radius:6px;background:var(--navy);color:#fff}
+  .btn:hover{background:var(--indigo2)}
+  .btn.ghost{background:#fff;color:var(--navy);border:1px solid #c9cfe6}
+  .btn.ghost:hover{background:#eef1fb}
+  .btn svg{width:14px;height:14px}
+  .hidden{display:none!important}
+  footer{background:var(--navy);color:#dfe3ff;font-size:13.5px}
+  .fwrap{max-width:1240px;margin:0 auto;padding:20px 24px;display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
+  footer a{color:#fff}
+  @media (max-width:900px){.grid,.steps{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.search{margin-left:0;width:100%}}
+  @media print{.bar,.tabs{display:none}.card{break-inside:avoid}body{background:#fff}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <div class="brand">
+      <div class="logo">
+        <!-- Placez le logo officiel OIM-DTM (fond transparent, version blanche) à côté de ce fichier sous le nom logo_oim_dtm.png -->
+        <img src="logo_oim_dtm.png" alt="OIM – Matrice de suivi des déplacements"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="wm">
+          <div class="oim">OIM<small>ONU MIGRATION</small></div>
+          <div class="sep"></div>
+          <div class="dtm"><small>Institut mondial des données</small>Matrice de suivi<br>des déplacements</div>
+        </div>
+      </div>
+      <div class="titles">
+        <h1>Burundi – Nos produits de données</h1>
+        <p>Displacement Tracking Matrix (DTM) · Organisation internationale pour les migrations (OIM)</p>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-f="all">Vue d'ensemble</button>
+      <button class="tab" data-f="mobilite">Mobilité &amp; déplacements</button>
+      <button class="tab" data-f="urgence">Urgences &amp; santé</button>
+      <button class="tab" data-f="solutions">Solutions durables &amp; besoins</button>
+      <span class="pill">8 produits · Mise à jour : octobre 2026</span>
+    </div>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="bwrap">
+    <label>Je cherche à…</label>
+    <button class="chip on" data-q="">Tout voir</button>
+    <button class="chip" data-q="combien">Savoir combien de PDI</button>
+    <button class="chip" data-q="catastrophe">Suivre une catastrophe</button>
+    <button class="chip" data-q="frontière">Suivre les frontières</button>
+    <button class="chip" data-q="retour">Préparer les retours</button>
+    <button class="chip" data-q="besoins">Connaître les besoins</button>
+    <input class="search" id="search" type="search" placeholder="Rechercher un produit, une province…">
+  </div>
+</div>
+
+<main>
+  <section class="kpis">
+    <div class="kpi"><b>8</b><span>Produits DTM</span></div>
+    <div class="kpi"><b>Colline</b><span>Niveau le plus fin des données</span></div>
+    <div class="kpi"><b>4×/an</b><span>Mise à jour des chiffres PDI</span></div>
+    <div class="kpi"><b>Gratuit</b><span>Accès libre en ligne</span></div>
+  </section>
+
+  <section class="panel">
+    <h2 class="ptitle">Comment accéder à nos données ?</h2>
+    <p class="psub">Tous les rapports DTM Burundi sont publics et téléchargeables gratuitement.</p>
+    <div class="steps">
+      <div class="step"><b>1. Choisissez le produit</b><p>Parcourez les fiches ci-dessous : chacune dit à quoi sert le produit et comment les données sont collectées.</p></div>
+      <div class="step"><b>2. Ouvrez le rapport</b><p>Cliquez sur le bouton d'accès : vous arrivez sur la page du rapport, avec le PDF et, si disponible, les données brutes.</p></div>
+      <div class="step"><b>3. Besoin de plus ?</b><p>Pour des données à la colline, une carte ou une analyse sur mesure, écrivez-nous : <a href="mailto:DTMBurundi@iom.int">DTMBurundi@iom.int</a></p></div>
+    </div>
+  </section>
+
+  <section class="grid" id="grid">
+
+    <!-- 1 BASELINE -->
+    <article class="card" style="--c:var(--indigo)" data-cat="mobilite">
+      <div class="chead"><div class="num">1</div><div>
+        <h3>Suivi de la mobilité – Évaluation de base</h3><span class="tag">Mobility Tracking · Baseline Assessment</span></div></div>
+      <div class="cbody">
+        <div class="row"><h4>À quoi ça sert ?</h4>
+          <p>Savoir <strong>combien</strong> de personnes déplacées internes (PDI) vivent dans chaque colline, <strong>pourquoi</strong> elles ont quitté leur maison et <strong>où</strong> elles sont logées.</p></div>
+        <div class="row"><h4>Qui est compté ?</h4>
+          <ul><li>Les PDI, y compris celles revenues sur leur colline d'origine mais pas encore dans leur maison ;</li>
+              <li>Les rapatriés devenus PDI à leur retour.</li></ul></div>
+        <div class="row"><h4>Comment on collecte ?</h4>
+          <p>Des volontaires formés de la Croix-Rouge du Burundi interrogent les autorités locales, les leaders communautaires et des informateurs clés, dans toutes les provinces, communes et collines.</p></div>
+        <div class="meta"><span>⏱ 4 fois par an</span><span>📍 National, par colline</span><span>📄 Tableau de bord</span></div>
+      </div>
+      <div class="cfoot"><h4>Accéder</h4><div class="links">
+        <a class="btn" target="_blank" href="https://dtm.iom.int/reports/burundi-tableau-de-bord-des-deplacements-internes-juin-2026">Tableau de bord – Juin 2026 (FR)</a>
+        <a class="btn ghost" target="_blank" href="https://dtm.iom.int/reports/burundi-internal-displacement-dashboard-june-2026">Dashboard – June 2026 (EN)</a>
+      </div></div>
+    </article>
+
+    <!-- 2 ETT -->
+    <article class="card" style="--c:var(--rose)" data-cat="urgence">
+      <div class="chead"><div class="num">2</div><div>
+        <h3>Suivi des urgences – Alertes rapides</h3><span class="tag">Emergency Tracking (ETT)</span></div></div>
+      <div class="cbody">
+        <div class="row"><h4>À quoi ça sert ?</h4>
+          <p>Signaler <strong>vite</strong> les nouvelles catastrophes (pluies torrentielles, vents violents, inondations, glissements de terrain, grêle) : combien de personnes sont touchées, combien sont déplacées et quels sont les besoins urgents.</p></div>
+        <div class="row"><h4>Comment on collecte ?</h4>
+          <ul><li><strong>Étape 1 – Alerte :</strong> l'événement est signalé dans les 24 à 48 heures par un réseau d'informateurs clés (chefs collinaires, Croix-Rouge du Burundi, Protection civile, autorités locales).</li>
+              <li><strong>Étape 2 – Suivi :</strong> les chiffres et les besoins sont vérifiés et consolidés, puis partagés avec les partenaires.</li></ul></div>
+        <div class="meta"><span>⏱ Chaque semaine + aperçu périodique</span><span>📍 National</span><span>📄 Note d'alerte</span></div>
+      </div>
+      <div class="cfoot"><h4>Accéder</h4><div class="links">
+        <a class="btn" target="_blank" href="https://dtm.iom.int/reports/burundi-apercu-des-alertes-rapides-en-cas-de-catastrophe-mars-avril-2026">Aperçu des alertes – Mars-avril 2026</a>
+        <a class="btn ghost" target="_blank" href="https://dtm.iom.int/reports/burundi-suivi-des-urgences-18-24-octobre-2026">Suivi 18-24 octobre 2026</a>
+      </div></div>
+    </article>
+
+    <!-- 3 FM -->
+    <article class="card" style="--c:var(--teal)" data-cat="mobilite urgence">
+      <div class="chead"><div class="num">3</div><div>
+        <h3>Suivi des flux aux frontières</h3><span class="tag">Flow Monitoring (FM)</span></div></div>
+      <div class="cbody">
+        <div class="row"><h4>À quoi ça sert ?</h4>
+          <p>Suivre les mouvements de personnes qui traversent la frontière pour <strong>anticiper les risques</strong>, aider à la prise de décision et mieux se préparer aux menaces sanitaires transfrontalières.</p></div>
+        <div class="row"><h4>Comment on collecte ?</h4>
+          <ul><li><strong>Registre (FMR) :</strong> on compte les voyageurs aux points de suivi et on note leur profil, d'où ils viennent, où ils vont et leur moyen de transport.</li>
+              <li><strong>Enquête individuelle (FMS) :</strong> de courts entretiens avec des voyageurs pour mieux connaître leur profil, leurs intentions et ce qu'ils savent des maladies sous surveillance.</li></ul></div>
+        <div class="meta"><span>⏱ Mensuel</span><span>📍 Points de suivi frontaliers</span><span>📄 Tableau de bord par point</span></div>
+      </div>
+      <div class="cfoot"><h4>Accéder</h4><div class="links">
+        <a class="btn" target="_blank" href="https://dtm.iom.int/fr/reports/burundi-registre-de-suivi-des-flux-rumonge-decembre-2025">Rumonge</a>
+        <a class="btn ghost" target="_blank" href="https://dtm.iom.int/reports/burundi-registre-de-suivi-des-flux-gahumo-decembre-2025">Gahumo</a>
+        <a class="btn ghost" target="_blank" href="https://dtm.iom.int/node/64411">Rumandari</a>
+      </div></div>
+    </article>
+
+    <!-- 4 PMM -->
+    <article class="card" style="--c:var(--gold)" data-cat="urgence mobilite">
+      <div class="chead"><div class="num">4</div><div>
+        <h3>Cartographie de la mobilité et des risques sanitaires</h3><span class="tag">Population Mobility Mapping (PMM)</span></div></div>
+      <div class="cbody">
+        <div class="row"><h4>À quoi ça sert ?</h4>
+          <p>Comprendre <strong>par où</strong> les gens se déplacent, notamment à travers la frontière, et <strong>où</strong> voyageurs et habitants se rencontrent (marchés, gares routières, lieux de culte…). Objectif : repérer les lieux à risque pour Ebola (MVE) et d'autres menaces de santé publique.</p></div>
+        <div class="row"><h4>Comment on collecte ?</h4>
+          <ul><li><strong>Étape 1 – Cartographie participative :</strong> avec les autorités locales, on identifie les points d'entrée, les couloirs de passage et les lieux de rassemblement.</li>
+              <li><strong>Étape 2 – Évaluation des sites prioritaires :</strong> un questionnaire est rempli avec le point focal de chaque site retenu.</li></ul></div>
+        <div class="meta"><span>⏱ Ponctuel</span><span>📍 Zones frontalières</span><span>📄 Rapport + cartes</span></div>
+      </div>
+      <div class="cfoot"><h4>Accéder</h4><div class="links">
+        <a class="btn" target="_blank" href="https://dtm.iom.int/fr/reports/burundi-rapport-de-cartographie-de-mobilite-des-populations-et-des-risques-de-sante">Rapport PMM – Mars 2026</a>
+      </div></div>
+    </article>
+
+    <!-- 5 SI -->
+    <article class="card" style="--c:var(--sky)" data-cat="solutions">
+      <div class="chead"><div class="num">5</div><div>
+        <h3>Indice de stabilité</h3><span class="tag">Stability Index</span></div></div>
+      <div class="cbody">
+        <div class="row"><h4>À quoi ça sert ?</h4>
+          <p>Mesurer à quel point une colline accueillant des personnes déplacées, des rapatriés et des communautés hôtes est <strong>stable</strong> : accès aux services de base, aux moyens de subsistance, aux infrastructures, cohésion sociale et sécurité. On voit ainsi ce qui aide ou freine un retour à une vie normale.</p></div>
+        <div class="row"><h4>Comment on collecte ?</h4>
+          <p>Entretiens dans chaque colline avec des informateurs clés qui connaissent bien la zone. Les mêmes collines sont suivies à chaque round pour voir l'évolution. Résultat : un score de 0 à 100 par colline.</p></div>
+        <div class="meta"><span>⏱ Par round (semestriel)</span><span>📍 Collines ciblées</span><span>📄 Rapport + tableau de bord</span></div>
+      </div>
+      <div class="cfoot"><h4>Accéder</h4><div class="links">
+        <a class="btn" target="_blank" href="https://dtm.iom.int/fr/reports/burundi-indice-de-stabilite-round-5-juin-decembre-2024">Round 5 (juin-déc. 2024)</a>
+        <a class="btn ghost" target="_blank" href="https://dtm.iom.int/reports/burundi-stability-index-round-4-january-june-2024">Round 4 (janv.-juin 2024)</a>
+        <a class="btn ghost" target="_blank" href="https://dtm.iom.int/reports/burundi-stability-index-round-3-july-december-2023">Round 3 (juil.-déc. 2023)</a>
+        <a class="btn ghost" target="_blank" href="https://dtm.iom.int/reports/burundi-stability-index-round-2-january-june-2023">Round 2 (janv.-juin 2023)</a>
+        <a class="btn ghost" target="_blank" href="https://dtm.iom.int/reports/burundi-stability-index-round-1-may-2023">Round 1 (mai 2023)</a>
+      </div></div>
+    </article>
+
+    <!-- 6 ISD -->
+    <article class="card" style="--c:var(--green)" data-cat="solutions">
+      <div class="chead"><div class="num">6</div><div>
+        <h3>Indice de solution durable</h3><span class="tag">Durable Solutions Index</span></div></div>
+      <div class="cbody">
+        <div class="row"><h4>À quoi ça sert ?</h4>
+          <p>Voir <strong>où en sont les ménages</strong> déplacés, rapatriés et hôtes sur le chemin d'une solution durable (niveau de vie, emploi, logement, documents, sécurité…), selon le cadre IASC. Cela aide à orienter la réintégration avec des données fiables.</p></div>
+        <div class="row"><h4>Comment on collecte ?</h4>
+          <p>Enquête auprès d'un échantillon représentatif de ménages (tirage en grappes stratifiées), complétée par des groupes de discussion.</p></div>
+        <div class="meta"><span>⏱ Ponctuel</span><span>📍 Par commune</span><span>📄 Rapport communal</span></div>
+      </div>
+      <div class="cfoot"><h4>Accéder</h4><div class="links">
+        <a class="btn" target="_blank" href="https://dtm.iom.int/node/62841">Nyanza (oct. 2025)</a>
+        <a class="btn ghost" target="_blank" href="https://dtm.iom.int/node/62846">Gisuru (oct. 2025)</a>
+      </div></div>
+    </article>
+
+    <!-- 7 Profilage -->
+    <article class="card" style="--c:var(--navy)" data-cat="solutions">
+      <div class="chead"><div class="num">7</div><div>
+        <h3>Profilage multisectoriel des localités de retour</h3><span class="tag">Site / Area Profiling</span></div></div>
+      <div class="cbody">
+        <div class="row"><h4>À quoi ça sert ?</h4>
+          <p>Décrire la situation des collines qui pourraient accueillir des retours : ce qu'elles <strong>peuvent offrir</strong>, leurs <strong>limites</strong>, les risques sociaux, les besoins prioritaires et ce qu'en pensent les habitants.</p></div>
+        <div class="row"><h4>Comment on collecte ?</h4>
+          <p>Entretiens dans chaque colline avec des informateurs clés qui connaissent bien la zone. Un rapport est produit par province.</p></div>
+        <div class="meta"><span>⏱ Décembre 2025</span><span>📍 5 provinces</span><span>📄 Rapport provincial</span></div>
+      </div>
+      <div class="cfoot"><h4>Accéder (un rapport par province)</h4><div class="links">
+        <a class="btn" target="_blank" href="https://dtm.iom.int/fr/reports/burundi-profilage-multisectoriel-des-localites-de-retour-buhumuza-decembre-2025">Buhumuza</a>
+        <a class="btn" target="_blank" href="https://dtm.iom.int/fr/reports/burundi-profilage-multisectoriel-des-localites-de-retour-bujumbura-decembre-2025">Bujumbura</a>
+        <a class="btn" target="_blank" href="https://dtm.iom.int/fr/reports/burundi-profilage-multisectoriel-des-localites-de-retour-burunga-decembre-2025">Burunga</a>
+        <a class="btn" target="_blank" href="https://dtm.iom.int/fr/reports/burundi-profilage-multisectoriel-des-localites-de-retour-butanyerera-decembre-2025">Butanyerera</a>
+        <a class="btn" target="_blank" href="https://dtm.iom.int/fr/reports/burundi-profilage-multisectoriel-des-localites-de-retour-gitega-decembre-2025">Gitega</a>
+      </div></div>
+    </article>
+
+    <!-- 8 MSNA -->
+    <article class="card" style="--c:var(--violet)" data-cat="solutions">
+      <div class="chead"><div class="num">8</div><div>
+        <h3>Évaluation multisectorielle des besoins</h3><span class="tag">MSNA</span></div></div>
+      <div class="cbody">
+        <div class="row"><h4>À quoi ça sert ?</h4>
+          <p>Identifier les <strong>besoins prioritaires</strong> des personnes déplacées dans tous les secteurs (abri, eau, santé, alimentation, éducation, protection…) pour mieux planifier l'aide, cibler les interventions et répartir les ressources.</p></div>
+        <div class="row"><h4>Comment on collecte ?</h4>
+          <p>Enquête auprès des ménages PDI, sur un échantillon représentatif tiré en grappes stratifiées.</p></div>
+        <div class="meta"><span>⏱ Annuel</span><span>📍 National</span><span>📄 Aperçu des besoins</span></div>
+      </div>
+      <div class="cfoot"><h4>Accéder</h4><div class="links">
+        <a class="btn" target="_blank" href="https://dtm.iom.int/fr/reports/burundi-apercu-des-besoins-humanitaires-des-pdi-au-burundi-octobre-2024">Aperçu des besoins des PDI (oct. 2024)</a>
+      </div></div>
+    </article>
+
+  </section>
+</main>
+
+<footer>
+  <div class="fwrap">
+    <div><strong>DTM Burundi</strong> · OIM, en partenariat avec la Croix-Rouge du Burundi</div>
+    <div>Tous les rapports : <a href="https://dtm.iom.int/burundi" target="_blank">dtm.iom.int/burundi</a> · Contact : <a href="mailto:DTMBurundi@iom.int">DTMBurundi@iom.int</a></div>
+  </div>
+</footer>
+
+<script>
+  const cards=[...document.querySelectorAll('.card')];
+  const keywords={
+    combien:['1'],catastrophe:['2'],'frontière':['3','4'],retour:['5','6','7'],besoins:['8']
+  };
+  let cat='all',q='',kw='';
+  function apply(){
+    cards.forEach(c=>{
+      const n=c.querySelector('.num').textContent.trim();
+      const okCat=cat==='all'||c.dataset.cat.split(' ').includes(cat);
+      const okKw=!kw||keywords[kw].includes(n);
+      const okQ=!q||c.textContent.toLowerCase().includes(q);
+      c.classList.toggle('hidden',!(okCat&&okKw&&okQ));
+    });
+  }
+  document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');cat=t.dataset.f;apply();});
+  document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
+    document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');kw=c.dataset.q;apply();});
+  document.getElementById('search').oninput=e=>{q=e.target.value.toLowerCase().trim();apply();};
+</script>
+</body>
+</html>
